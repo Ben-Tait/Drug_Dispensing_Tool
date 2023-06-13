@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 13, 2023 at 07:08 PM
+-- Generation Time: Jun 13, 2023 at 07:50 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -28,12 +28,15 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `doctor` (
-  `doctorSsn` int(11) NOT NULL,
+  `doctorId` int(11) NOT NULL,
   `firstName` varchar(50) NOT NULL,
   `lastName` varchar(50) NOT NULL,
+  `doctorSSN` varchar(20) NOT NULL,
   `speciality` varchar(100) NOT NULL,
   `startYear` date NOT NULL,
-  `gender` varchar(10) NOT NULL
+  `gender` varchar(10) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -75,12 +78,13 @@ CREATE TABLE `drugprescription` (
 --
 
 CREATE TABLE `patient` (
-  `patient_ssn` int(11) NOT NULL,
+  `patientId` int(11) NOT NULL,
   `firstName` varchar(50) NOT NULL,
   `lastName` varchar(50) NOT NULL,
   `address` varchar(100) NOT NULL,
   `DateOfBirth` date NOT NULL,
   `gender` varchar(7) NOT NULL,
+  `username` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -158,7 +162,7 @@ CREATE TABLE `pharmpharmco` (
 -- Indexes for table `doctor`
 --
 ALTER TABLE `doctor`
-  ADD PRIMARY KEY (`doctorSsn`);
+  ADD PRIMARY KEY (`doctorId`);
 
 --
 -- Indexes for table `drug`
@@ -180,7 +184,7 @@ ALTER TABLE `drugprescription`
 -- Indexes for table `patient`
 --
 ALTER TABLE `patient`
-  ADD PRIMARY KEY (`patient_ssn`);
+  ADD PRIMARY KEY (`patientId`);
 
 --
 -- Indexes for table `patientd`
@@ -226,7 +230,7 @@ ALTER TABLE `pharmpharmco`
 -- AUTO_INCREMENT for table `doctor`
 --
 ALTER TABLE `doctor`
-  MODIFY `doctorSsn` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `doctorId` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `drug`
@@ -244,7 +248,7 @@ ALTER TABLE `drugprescription`
 -- AUTO_INCREMENT for table `patient`
 --
 ALTER TABLE `patient`
-  MODIFY `patient_ssn` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `patientId` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `patientd`
@@ -290,16 +294,16 @@ ALTER TABLE `drug`
 -- Constraints for table `drugprescription`
 --
 ALTER TABLE `drugprescription`
-  ADD CONSTRAINT `drugprescription_ibfk_1` FOREIGN KEY (`patientId`) REFERENCES `patient` (`patient_ssn`),
-  ADD CONSTRAINT `drugprescription_ibfk_2` FOREIGN KEY (`doctorId`) REFERENCES `doctor` (`doctorSsn`),
+  ADD CONSTRAINT `drugprescription_ibfk_1` FOREIGN KEY (`patientId`) REFERENCES `patient` (`patientId`),
+  ADD CONSTRAINT `drugprescription_ibfk_2` FOREIGN KEY (`doctorId`) REFERENCES `doctor` (`doctorId`),
   ADD CONSTRAINT `drugprescription_ibfk_3` FOREIGN KEY (`drugId`) REFERENCES `drug` (`drug_ID`);
 
 --
 -- Constraints for table `patientd`
 --
 ALTER TABLE `patientd`
-  ADD CONSTRAINT `patientd_ibfk_1` FOREIGN KEY (`doctorId`) REFERENCES `doctor` (`doctorSsn`),
-  ADD CONSTRAINT `patientd_ibfk_2` FOREIGN KEY (`patientId`) REFERENCES `patient` (`patient_ssn`);
+  ADD CONSTRAINT `patientd_ibfk_1` FOREIGN KEY (`doctorId`) REFERENCES `doctor` (`doctorId`),
+  ADD CONSTRAINT `patientd_ibfk_2` FOREIGN KEY (`patientId`) REFERENCES `patient` (`patientId`);
 
 --
 -- Constraints for table `pharmdrug`
