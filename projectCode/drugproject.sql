@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 13, 2023 at 07:50 PM
+-- Generation Time: Jun 15, 2023 at 12:40 PM
 -- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- PHP Version: 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -81,12 +81,20 @@ CREATE TABLE `patient` (
   `patientId` int(11) NOT NULL,
   `firstName` varchar(50) NOT NULL,
   `lastName` varchar(50) NOT NULL,
+  `patientSSN` varchar(50) NOT NULL,
   `address` varchar(100) NOT NULL,
   `DateOfBirth` date NOT NULL,
-  `gender` varchar(7) NOT NULL,
   `username` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `gender` varchar(7) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `patient`
+--
+
+INSERT INTO `patient` (`patientId`, `firstName`, `lastName`, `patientSSN`, `address`, `DateOfBirth`, `username`, `password`, `gender`) VALUES
+(8, 'Peter', 'Gathoga', '1234567890', 'Pipeline', '2001-01-01', 'pindano', '$2y$10$j3Cz/98YjLxOrizjrq.RqePGzq7Clz4FPkFe6qsoOesO7N7Jlncym', 'Male');
 
 -- --------------------------------------------------------
 
@@ -122,8 +130,17 @@ CREATE TABLE `pharmacy` (
 CREATE TABLE `pharmco` (
   `pharmCoId` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `phoneNumber` varchar(15) NOT NULL
+  `phoneNumber` varchar(15) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `pharmco`
+--
+
+INSERT INTO `pharmco` (`pharmCoId`, `name`, `phoneNumber`, `username`, `password`) VALUES
+(1, 'Dawa', '78934562', 'Dawa Co', '$2y$10$f0N8ka5nlNpHb2eOEUUcgetvXEsxdjdoqLUl.xBm6FpNAAaZa7lwi');
 
 -- --------------------------------------------------------
 
@@ -248,7 +265,7 @@ ALTER TABLE `drugprescription`
 -- AUTO_INCREMENT for table `patient`
 --
 ALTER TABLE `patient`
-  MODIFY `patientId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `patientId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `patientd`
@@ -266,7 +283,7 @@ ALTER TABLE `pharmacy`
 -- AUTO_INCREMENT for table `pharmco`
 --
 ALTER TABLE `pharmco`
-  MODIFY `pharmCoId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `pharmCoId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `pharmdrug`
