@@ -3,46 +3,62 @@ require_once "databaseconnection.php";
 $dbConnection = DatabaseConnection::getInstance();
 $connection = $dbConnection->getConnection();
 
-if (isset($_GET['doctorid'])) {
-    $doctorid = $_GET['doctorid'];
+class DoctorUpdater {
+    private $connection;
 
-    // Check if the form is submitted
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Retrieve the new username value from the form submission
-        $newUsername = $_POST['username'];
+    public function __construct($connection) {
+        $this->connection = $connection;
+    }
 
-        // Prepare and execute the SQL UPDATE statement
+    public function updateUsername($doctorId, $newUsername) {
         $sql = "UPDATE doctor SET username = ? WHERE doctorId = ?";
-        $stmt = mysqli_stmt_init($connection);
+        $stmt = mysqli_stmt_init($this->connection);
         mysqli_stmt_prepare($stmt, $sql);
-        mysqli_stmt_bind_param($stmt, "ss", $newUsername, $doctorid);
+        mysqli_stmt_bind_param($stmt, "ss", $newUsername, $doctorId);
 
         if (mysqli_stmt_execute($stmt)) {
             // Update successful
             echo "Username updated successfully.";
         } else {
             // Update failed
-            echo "Error updating username: " . mysqli_error($connection);
+            echo "Error updating username: " . mysqli_error($this->connection);
         }
 
         mysqli_stmt_close($stmt);
     }
 
-    // Retrieve the current username of the patient
-    $selectSql = "SELECT username FROM doctor WHERE doctorId = ?";
-    $selectStmt = mysqli_stmt_init($connection);
-    mysqli_stmt_prepare($selectStmt, $selectSql);
-    mysqli_stmt_bind_param($selectStmt, "s", $doctorid);
-    mysqli_stmt_execute($selectStmt);
-    mysqli_stmt_bind_result($selectStmt, $currentUsername);
+    public function getCurrentUsername($doctorId) {
+        $selectSql = "SELECT username FROM doctor WHERE doctorId = ?";
+        $selectStmt = mysqli_stmt_init($this->connection);
+        mysqli_stmt_prepare($selectStmt, $selectSql);
+        mysqli_stmt_bind_param($selectStmt, "s", $doctorId);
+        mysqli_stmt_execute($selectStmt);
+        mysqli_stmt_bind_result($selectStmt, $currentUsername);
 
-    mysqli_stmt_fetch($selectStmt);
-    mysqli_stmt_close($selectStmt);
+        mysqli_stmt_fetch($selectStmt);
+        mysqli_stmt_close($selectStmt);
 
-    // Display the form to update the username
+        return $currentUsername;
+    }
+}
+
+if (isset($_GET['doctorid'])) {
+    $doctorId = $_GET['doctorid'];
+
+    // Check if the form is submitted
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $newUsername = $_POST['username'];
+
+        $doctorUpdater = new DoctorUpdater($connection);
+        $doctorUpdater->updateUsername($doctorId, $newUsername);
+    }
+
+    $doctorUpdater = new DoctorUpdater($connection);
+    $currentUsername = $doctorUpdater->getCurrentUsername($doctorId);
+
     echo "<h1>Update Username</h1>";
     echo "<p>Current Username: " . $currentUsername . "</p>";
-    echo "<form method='POST' action='update_doctor.php?doctorid=" . $doctorid . "'>";
+    echo "<form method='POST' action='update_doctor.php?doctorid=" . $doctorId . "'>";
     echo "<label for='username'>New Username:</label>";
     echo "<input type='text' name='username' id='username'>";
     echo "<input type='submit' value='Update'>";

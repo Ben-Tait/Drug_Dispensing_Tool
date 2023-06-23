@@ -29,7 +29,8 @@ class admin {
             <th>SSN</th>
             <th>Address</th>
             <th>DateofBirth</th>
-            <th>Username</th>";
+            <th>Username</th>
+            <th>Action</th>";
 
         while ($user = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
             echo "<tr>
@@ -40,7 +41,10 @@ class admin {
                     <td>" . $user['address'] . "</td>
                     <td>" . $user['DateOfBirth'] . "</td>
                     <td>" . $user['username'] . "</td>
-                    <td><a href='delete_patient.php?patientid=" . $user['patientId'] . "'>Delete</a></td>
+                    <td>
+                    <a href='delete_patient.php?patientid=" . $user['patientId'] . "'>Delete</a>
+                    <a href='update_patient.php?patientid=" . $user['patientId'] . "'>Update</a>
+                    </td>
                 </tr>";
         }
 
@@ -63,7 +67,8 @@ class admin {
             <th>SSN</th>
             <th>Speciality</th>
             <th>startYear</th>
-            <th>Username</th>";
+            <th>Username</th>
+            <th>Action</th>";
 
         while ($doctor = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
             echo "<tr>
@@ -74,7 +79,9 @@ class admin {
                     <td>" . $doctor['speciality'] . "</td>
                     <td>" . $doctor['startYear'] . "</td>
                     <td>" . $doctor['username'] . "</td>
-                    <td><a href='delete_doctor.php?doctorid=" . $doctor['doctorId'] . "'>Delete</a></td>
+                    <td><a href='delete_doctor.php?doctorid=" . $doctor['doctorId'] . "'>Delete</a>
+						<a href='update_doctor.php?doctorid=" . $doctor['doctorId'] . "'>Update</a>
+                    </td>
                 </tr>";
         }
 
