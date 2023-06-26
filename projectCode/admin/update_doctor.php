@@ -1,6 +1,7 @@
+
 <?php
 require_once "databaseconnection.php";
-$dbConnection = DatabaseConnection::getInstance();
+$dbConnection = DatabaseConnection::getInstance();g
 $connection = $dbConnection->getConnection();
 
 class DoctorUpdater {
@@ -10,35 +11,45 @@ class DoctorUpdater {
         $this->connection = $connection;
     }
 
-    public function updateUsername($doctorId, $newUsername) {
-        $sql = "UPDATE doctor SET username = ? WHERE doctorId = ?";
+    public function updateDoctor($doctorId, $data) {
+        $sql = "UPDATE doctor SET firstName = ?, lastName = ?, doctorSSN = ?, speciality = ?, startYear = ?, gender = ?, username = ? WHERE doctorId = ?";
         $stmt = mysqli_stmt_init($this->connection);
         mysqli_stmt_prepare($stmt, $sql);
-        mysqli_stmt_bind_param($stmt, "ss", $newUsername, $doctorId);
+
+        // Extract the values from the $data array
+        $firstName = $data['firstName'];
+        $lastName = $data['lastName'];
+        $doctorSSN = $data['doctorSSN'];
+        $speciality = $data['speciality'];
+        $startYear = $data['startYear'];
+        $gender = $data['gender'];
+        $username = $data['username'];
+
+        // Bind the values to the prepared statement
+        mysqli_stmt_bind_param($stmt, "ssssssss", $firstName, $lastName, $doctorSSN, $speciality, $startYear, $gender, $username, $doctorId);
 
         if (mysqli_stmt_execute($stmt)) {
             // Update successful
-            echo "Username updated successfully.";
+            echo "Doctor details updated successfully.";
         } else {
             // Update failed
-            echo "Error updating username: " . mysqli_error($this->connection);
+            echo "Error updating doctor details: " . mysqli_error($this->connection);
         }
 
         mysqli_stmt_close($stmt);
     }
 
-    public function getCurrentUsername($doctorId) {
-        $selectSql = "SELECT username FROM doctor WHERE doctorId = ?";
+    public function getCurrentDoctorDetails($doctorId) {
+        $selectSql = "SELECT * FROM doctor WHERE doctorId = ?";
         $selectStmt = mysqli_stmt_init($this->connection);
         mysqli_stmt_prepare($selectStmt, $selectSql);
         mysqli_stmt_bind_param($selectStmt, "s", $doctorId);
         mysqli_stmt_execute($selectStmt);
-        mysqli_stmt_bind_result($selectStmt, $currentUsername);
-
-        mysqli_stmt_fetch($selectStmt);
+        $result = mysqli_stmt_get_result($selectStmt);
+        $currentDoctorDetails = mysqli_fetch_assoc($result);
         mysqli_stmt_close($selectStmt);
 
-        return $currentUsername;
+        return $currentDoctorDetails;
     }
 }
 
@@ -47,20 +58,47 @@ if (isset($_GET['doctorid'])) {
 
     // Check if the form is submitted
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $newUsername = $_POST['username'];
+        // Retrieve all the updated doctor fields from the $_POST array
+        $updatedData = array(
+            'firstName' => $_POST['firstName'],
+            'lastName' => $_POST['lastName'],
+            'doctorSSN' => $_POST['doctorSSN'],
+            'speciality' => $_POST['speciality'],
+            'startYear' => $_POST['startYear'],
+            'gender' => $_POST['gender'],
+            'username' => $_POST['username']
+        );
 
         $doctorUpdater = new DoctorUpdater($connection);
-        $doctorUpdater->updateUsername($doctorId, $newUsername);
+        $doctorUpdater->updateDoctor($doctorId, $updatedData);
     }
 
     $doctorUpdater = new DoctorUpdater($connection);
-    $currentUsername = $doctorUpdater->getCurrentUsername($doctorId);
+    $currentDoctorDetails = $doctorUpdater->getCurrentDoctorDetails($doctorId);
 
-    echo "<h1>Update Username</h1>";
-    echo "<p>Current Username: " . $currentUsername . "</p>";
+    echo "<h1>Update Doctor Details</h1>";
     echo "<form method='POST' action='update_doctor.php?doctorid=" . $doctorId . "'>";
-    echo "<label for='username'>New Username:</label>";
-    echo "<input type='text' name='username' id='username'>";
+    echo "<label for='firstName'>First Name:</label>";
+    echo "<input type='text' name='firstName' id='firstName' value='" . $currentDoctorDetails['firstName'] . "'><br>";
+
+    echo "<label for='lastName'>Last Name:</label>";
+    echo "<input type='text' name='lastName' id='lastName' value='" . $currentDoctorDetails['lastName'] . "'><br>";
+
+    echo "<label for='doctorSSN'>Doctor SSN:</label>";
+    echo "<input type='text' name='doctorSSN' id='doctorSSN' value='" . $currentDoctorDetails['doctorSSN'] . "'><br>";
+
+    echo "<label for='speciality'>Speciality:</label>";
+    echo "<input type='text' name='speciality' id='speciality' value='" . $currentDoctorDetails['speciality'] . "'><br>";
+
+    echo "<label for='startYear'>Start Year:</label>";
+    echo "<input type='text' name='startYear' id='startYear' value='" . $currentDoctorDetails['startYear'] . "'><br>";
+
+    echo "<label for='gender'>Gender:</label>";
+    echo "<input type='text' name='gender' id='gender' value='" . $currentDoctorDetails['gender'] . "'><br>";
+
+    echo "<label for='username'>Username:</label>";
+    echo "<input type='text' name='username' id='username' value='" . $currentDoctorDetails['username'] . "'><br>";
+
     echo "<input type='submit' value='Update'>";
     echo "</form>";
 }
