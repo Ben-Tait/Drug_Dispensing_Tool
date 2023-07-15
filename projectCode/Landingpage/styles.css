@@ -1,0 +1,304 @@
+/* General styles */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  color: #333;
+  background-color: #f7f7f7;
+ 
+ 
+}
+
+
+h1, h2 {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: brown;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+  .dropdown {
+    position: relative;
+  }
+  
+  .dropdown .dropdown-toggle::after {
+    content: "\25BE"; /* Down arrow */
+    display: inline-block;
+    margin-left: 5px;
+  }
+  
+  .dropdown .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .dropdown:hover .dropdown-menu {
+    display: block;
+  }
+  
+  .dropdown .dropdown-menu li {
+    margin-bottom: 5px;
+  }
+  
+  .dropdown .dropdown-menu li a {
+    display: block;
+    padding: 5px 10px;
+    color: #333;
+    transition: background-color 0.3s ease;
+  }
+  
+  .dropdown .dropdown-menu li a:hover {
+    background-color: #f7f7f7;
+  }
+  
+
+
+}
+
+/* Header styles */
+
+header {
+  background-color: #fff;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  
+
+}
+
+header h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+header nav ul li {
+  display: inline-block;
+  margin-left: 10px;
+}
+
+/* Hero section styles */
+
+#hero {
+  background-color: #337ab7;
+  padding: 100px 20px;
+  text-align: center;
+  color: #fff;
+
+}
+
+#hero h2 {
+  font-size: 48px;
+  margin-bottom: 20px;
+  
+}
+
+#hero p {
+  font-size: 20px;
+  margin-bottom: 40px;
+  color: #fff;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 12px 24px;
+  font-size: 18px;
+  background-color: #fff;
+  color: #337ab7;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #e6e6e6;
+}
+
+
+
+#features {
+  background-color: #fff;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+#features h2 {
+  font-size: 32px;
+  margin-bottom: 40px;
+}
+
+#features ul {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+#features ul li {
+  font-size: 18px;
+  margin-bottom: 20px;
+  width: 50%;
+}
+
+/* How It Works section styles */
+
+#how-it-works {
+  background-color: #f7f7f7;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+#how-it-works h2 {
+  font-size: 32px;
+  margin-bottom: 40px;
+}
+
+#how-it-works ol {
+  font-size: 18px;
+  margin-bottom: 30px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+
+#how-it-works ol li {
+  margin-bottom: 20px;
+}
+
+/* Testimonials section styles */
+
+#testimonials {
+  background-color: #fff;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+#testimonials h2 {
+  font-size: 32px;
+  margin-bottom: 40px;
+}
+
+/* Portfolio section styles */
+
+#portfolio {
+  background-color: #f7f7f7;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+#portfolio h2 {
+  font-size: 32px;
+  margin-bottom: 40px;
+}
+
+/* Call to Action section styles */
+
+#call-to-action {
+  background-color: #337ab7;
+  padding: 100px 20px;
+  text-align: center;
+  color: #fff;
+}
+
+#call-to-action h2 {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+#call-to-action p {
+  font-size: 20px;
+  margin-bottom: 40px;
+  color: #fff;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Pricing section styles */
+
+#pricing {
+  background-color: #fff;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+#pricing h2 {
+  font-size: 32px;
+  margin-bottom: 40px;
+}
+
+/* Contact section styles */
+
+#contact {
+  background-color: #f7f7f7;
+  padding: 60px 20px;
+}
+
+#contact h2 {
+  font-size: 32px;
+  margin-bottom: 40px;
+}
+
+form input,
+form textarea {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+form button {
+  padding: 12px 24px;
+  font-size: 18px;
+  background-color: #337ab7;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+form button:hover {
+  background-color: #135588;
+}
+
+/* Footer styles */
+
+footer {
+  background-color: #333;
+  padding: 20px;
+  text-align: center;
+  color: #fff;
+}
+
+footer p {
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+}
+
+footer nav ul li {
+  display: inline-block;
+  margin-left: 10px;
+}
+
+footer nav ul li a {
+  color: #fff;
+}
