@@ -243,6 +243,7 @@ $pharmacyInfo = $pharmacyInfoObj->getPharmacyInfo();
         <h2>Welcome, <?php echo $_SESSION['pharmacy']; ?></h2>
         <ul>
             <li><a href="pharmcontracts.php">Contracts</a></li>
+            <li><a href="activeContracts.php">Contracts Inventory</a></li>
             <li><a href="pharmDrugs.php">Drugs</a></li>
             <li><a href="pharmInventory.php">Drugs Inventory</a></li>
             <li><a href="pharmPrescriptions.php">Prescriptions</a></li>

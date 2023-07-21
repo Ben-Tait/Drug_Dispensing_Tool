@@ -108,7 +108,7 @@ if (!isset($_SESSION["pharmacy"])) {
         public function getDrug() {
             $sql = "SELECT drugName, tradeName, drugFormula, price, dateOfman, expiryDate 
         FROM drug AS d 
-        WHERE d.drug_ID IN (SELECT drugId FROM pharmdrug AS p WHERE p.pharmID = ?)";
+        WHERE d.contractID IN (SELECT contractID FROM pharmpharmco AS p WHERE p.pharmID = ?)";
 
             $stmt = mysqli_stmt_init($this->conn);
             $pharmid = $this->getPharmID();

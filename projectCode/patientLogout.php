@@ -1,5 +1,5 @@
 <?php
 session_start();
 session_destroy();
-header("Location: patientLogin.php");
+header("Location: Landingpage/landing_page.html");
 ?>

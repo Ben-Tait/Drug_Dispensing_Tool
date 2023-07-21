@@ -1,6 +1,6 @@
 <?php
 session_start();
 session_destroy();
-header("Location: pharmacyCoLogin.php")
+header("Location: Landingpage/landing_page.html");
 
 ?>

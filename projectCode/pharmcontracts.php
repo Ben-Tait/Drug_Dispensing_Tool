@@ -148,9 +148,11 @@ $contractsData = $contractListing->getContracts();
         <a href="pharmacy.php"><i class="material-icons icon">home</i></a>
         <ul>
             <li><a href="pharmcontracts.php">Contracts</a></li>
+            <li><a href="activeContracts.php">Contracts Inventory</a></li>
             <li><a href="pharmDrugs.php">Drugs</a></li>
             <li><a href="pharmInventory.php">Drugs Inventory</a></li>
             <li><a href="pharmPrescriptions.php">Prescriptions</a></li>
+
         </ul>
         <div class="logout">
             <a href="pharmacy_logout.php"><button><i class="material-icons icon">logout</i>Log Out</button></a>

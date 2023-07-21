@@ -101,6 +101,7 @@
                 mysqli_stmt_bind_param($stmt, "sssss", $this->name, $this->address, $this->phoneNumber, $this->username, $hashPassword);
                 mysqli_execute($stmt);
                 echo "Registered successfully!";
+                header("Location: pharmacy_login.php");
             } else {
                 die("Something went wrong!");
             }

@@ -53,8 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['contractID'])) {
     // Perform the contract assignment
     $contractAssignment = new ContractAssignment();
     $contractAssignment->assignContractToPharmacy($contractID);
+    header("Location: activeContracts.php");
 }
 
-// Redirect back to the contracts page after the assignment is done
-// header("Location: pharmcontracts.php");
-// exit;
+

@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -72,20 +74,22 @@
         }
     
         public function addAdmin() {
-            $dbConnection = DatabaseConnection::getInstance();
-            $conn = $dbConnection->getConnection();
-            $stmt = mysqli_stmt_init($conn);
-            $sql = "INSERT INTO admin (username, password) VALUES (?, ?)";
-            $preparestmt = mysqli_stmt_prepare($stmt, $sql);
-            $hashPassword = password_hash($this->password, PASSWORD_DEFAULT);
-            if ($preparestmt) {
-                mysqli_stmt_bind_param($stmt, "ss", $username, $hashPassword);
-                mysqli_execute($stmt);
-                echo "Registered successfully!";
-            } else {
-                die("Something went wrong!");
-            }
-        }
+    $dbConnection = DatabaseConnection::getInstance();
+    $conn = $dbConnection->getConnection();
+    $stmt = mysqli_stmt_init($conn);
+    $sql = "INSERT INTO admin (username, password) VALUES (?, ?)";
+    $preparestmt = mysqli_stmt_prepare($stmt, $sql);
+    $hashPassword = password_hash($this->password, PASSWORD_DEFAULT);
+
+    if ($preparestmt) {
+        mysqli_stmt_bind_param($stmt, "ss", $this->username, $hashPassword);
+        mysqli_execute($stmt);
+        echo "Registered successfully!";
+    } else {
+        die("Something went wrong!");
+    }
+}
+
     }
    
     

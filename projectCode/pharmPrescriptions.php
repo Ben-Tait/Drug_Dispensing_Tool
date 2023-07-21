@@ -18,7 +18,10 @@ class pharmacyPrescriptions{
 
 	public function getAllPrescriptions(){
 		$stmt = mysqli_stmt_init($this->connection);
-		$sql = "SELECT prescriptionID, prescriptionDesc, prescriptiondate FROM drugprescription WHERE pharmID IS NULL";
+		$sql = "SELECT s.username, p.prescriptionID, p.prescriptionDesc, p.prescriptiondate 
+        FROM drugprescription AS p 
+        JOIN patient AS s ON p.patientID = s.patientID
+        WHERE p.pharmID IS NULL";
 		$preparestmt = mysqli_stmt_prepare($stmt, $sql);
 
 		if($preparestmt){
@@ -193,11 +196,17 @@ $prescriptions = $pharmacyPrescriptions->getAllPrescriptions();
 		<?php
 		if (!empty($prescriptions)) {
 			echo "<table>";
-			echo "<tr><th>Prescription Description</th><th>Prescription Date</th><th>Prescribe</th></tr>";
+			echo "<tr>
+			<th>Patientname</th>
+			<th>Prescription Description</th>
+			<th>Prescription Date</th>
+			<th>Prescribe</th>
+			</tr>";
 			$isOddRow = true;
 			foreach ($prescriptions as $prescription) {
 				$rowClass = $isOddRow ? "odd-row" : "even-row";
 				echo "<tr class='" . $rowClass . "'>";
+				echo "<td>" . $prescription['username'] . "</td>";
 				echo "<td>" . $prescription['prescriptionDesc'] . "</td>";
 				echo "<td>" . $prescription['prescriptiondate'] . "</td>";
 				echo '<td><button onclick="openPrescriptionPopup(' . $prescription['prescriptionID'] . ', \'' . $prescription['prescriptionDesc'] . '\', \'' . $prescription['prescriptiondate'] . '\')">Prescribe</button></td>';

@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (isset($_SESSION["admin"])) {
+    header("Location: admin.php");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -74,8 +82,10 @@
 			$user=mysqli_fetch_array($result, MYSQLI_ASSOC);
 
 			if($user){
-				if ($user['password']===$password) {
+				if (password_verify($password, $user['password'])) {
 					echo "Successful Login!";
+					session_start();
+					$_SESSION['admin'] = $username;
 					header("Location: admin.php");
 					die();
 				}
@@ -97,5 +107,6 @@
 		$Admin->checkUser($username,$password);
 	}
 	?>
+	
 </body>
 </html>
