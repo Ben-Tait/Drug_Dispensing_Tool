@@ -4,6 +4,63 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Company Registration</title>
+	<style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .registration-form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .registration-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .registration-form input[type="text"],
+        .registration-form input[type="password"] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .registration-form input[type="submit"] {
+            background-color: #1877F2; /* Facebook blue color */
+            color: #ffffff;
+            width: 100%;
+            padding: 12px 20px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .registration-form input[type="submit"]:hover {
+            background-color: #0f6ad0; /* Slightly darker on hover */
+        }
+
+        .error-message {
+            color: #ff0000;
+            margin-top: 5px;
+        }
+    </style>
 
 </head>
 <body>
@@ -87,14 +144,16 @@ $company->addCompany();
 
 }
 	?>
-	<form action="pharmacyCoRegistration.php" method="post">
-		<input type="text" name="company" placeholder="Company Name: ">
-		<input type="text" name="phonenumber" placeholder="Phone Number: ">
-		<input type="text" name="username" placeholder="Username: ">
-		<input type="password" name="password" placeholder="Password: ">
-		<input type="password" name="confirmpassword" placeholder="Confirm Password: ">
-		<input type="submit" name="submit" value="Register">
-	</form>
+	 <div class="registration-form">
+        <h2>Company Registration</h2>
+        <form action="pharmacyCoRegistration.php" method="post">
+            <input type="text" name="company" placeholder="Company Name" required>
+            <input type="text" name="phonenumber" placeholder="Phone Number" required>
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="password" name="confirmpassword" placeholder="Confirm Password" required>
+            <input type="submit" name="submit" value="Register">
+        </form>
 
 </body>
 </html>

@@ -4,53 +4,72 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Pharmacy Registration</title>
-	<style>
-		body {
-			font-family: Arial, sans-serif;
-			background-color: #f0f2f5;
-			margin: 0;
-			padding: 0;
-		}
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+        }
+
         form {
-		background-color: #fff;
-		padding: 20px;
-		max-width: 400px;
-		margin: 20px auto;
-		border-radius: 4px;
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	}
+            background-color: #fff;
+            padding: 20px;
+            max-width: 400px;
+            margin: 20px auto;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
 
-	input[type="text"],
-	input[type="password"],
-	input[type="tel"] {
-		width: 100%;
-		padding: 10px;
-		border: 1px solid #ccc;
-		border-radius: 4px;
-		margin-bottom: 10px;
-		box-sizing: border-box;
-	}
+        input[type="text"],
+        input[type="password"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            /* Add padding to the right for the icon */
+            padding-right: 40px;
+            /* Position the icon */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-user'%3E%3Cpath d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'%3E%3C/path%3E%3Ccircle cx='12' cy='7' r='4'%3E%3C/circle%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: calc(100% - 10px) center; /* Adjust the position of the icon */
+            background-size: 20px 20px; /* Set the size of the icon */
+        }
 
-	label {
-		margin-right: 10px;
-	}
+        input[type="submit"],
+        input[type="button"] {
+            background-color: #4267B2;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 30px;
+        }
 
-	input[type="submit"],
-	input[type="button"] {
-		background-color: #4267B2;
-		color: #fff;
-		border: none;
-		padding: 10px 20px;
-		border-radius: 4px;
-		cursor: pointer;
-		margin-top: 30px;
-	}
+        input[type="submit"]:hover,
+        input[type="button"]:hover {
+            background-color: #3b5998;
+        }
+        .error-message {
+            background-color: #f44336;
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
 
-	input[type="submit"]:hover,
-	input[type="button"]:hover {
-		background-color: #3b5998;
-	}
-</style>
+        .error-icon {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+    </style>
 </head>
 <body>
 	<?php
@@ -99,10 +118,12 @@
             $error = $this->validate($name, $address, $phoneNumber, $username, $password, $confirmpassword);
             
             if(count($error) > 0){
-                foreach ($error as $e) {
-                    echo $e;
-                }
-            }else{
+                foreach ($error as $errors) {
+                echo "<div class='error-message'>";
+                echo "<i class='material-icons error-icon'>warning</i>";
+                echo $errors;
+                echo "</div>";
+            }}else{
                 $pharmacy = new Pharmacy($name, $address, $phoneNumber, $username, $password);
                 $pharmacy->addPharmacy();
             }

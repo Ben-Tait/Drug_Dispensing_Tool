@@ -4,6 +4,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Patient Registration</title>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> 
 	<style>
 		body {
 			font-family: Arial, sans-serif;
@@ -54,6 +55,18 @@
 		input[type="submit"]:hover,
 		input[type="button"]:hover {
 			background-color: #3b5998;
+		}
+		.title-container {
+			margin-bottom: 20px;
+			color: #337ab7;
+			font-size: 24px;
+			font-weight: bold;
+		}
+
+		.material-icons.icon {
+			vertical-align: middle;
+			font-size: 24px;
+			margin-right: 10px;
 		}
 	</style>
 </head>
@@ -180,9 +193,14 @@
 if(isset($_POST['submit'])){
 $newPatient = new addCheckedPatient();
 $newPatient->addCheckedPatient();
+header("Location: patientLogin.php");
 }
 	?>
+
 	<form action="patientRegistration.php" method="post">
+		<div class="title-container">
+		<i class="material-icons icon">person_add</i> Patient Registration <!-- Add the icon and title -->
+	</div>
 		<input type="text" name="firstname" placeholder="Firstname: ">
 		<input type="text" name="lastname" placeholder="Lastname: ">
 		<input type="text" name="ssn" placeholder="Social Security Number: ">

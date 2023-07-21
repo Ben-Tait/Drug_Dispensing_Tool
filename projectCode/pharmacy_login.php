@@ -72,7 +72,7 @@ if (isset($_SESSION['pharmacy'])) {
             $conn = $dbConnection->getConnection();
             $sql = "SELECT * FROM pharmacy WHERE username=?";
             $stmt = mysqli_stmt_init($conn);
-            $preparestmt = mysqli_stmt_prepare($stmt, $sql);
+            $preparestmt=mysqli_stmt_prepare($stmt, $sql);
             mysqli_stmt_bind_param($stmt, "s", $this->username);
             mysqli_stmt_execute($stmt);
             $result = mysqli_stmt_get_result($stmt);
@@ -81,7 +81,6 @@ if (isset($_SESSION['pharmacy'])) {
             if ($pharmacy) {
                 if (password_verify($this->password, $pharmacy['password'])) {
                     echo "Successful Login";
-                    session_start();
                     $_SESSION['pharmacy'] = $this->username;
                     header("Location: pharmacy.php");
                     die();

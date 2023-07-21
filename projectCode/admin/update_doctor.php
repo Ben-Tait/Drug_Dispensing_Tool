@@ -1,7 +1,7 @@
 
 <?php
 require_once "databaseconnection.php";
-$dbConnection = DatabaseConnection::getInstance();g
+$dbConnection = DatabaseConnection::getInstance();
 $connection = $dbConnection->getConnection();
 
 class DoctorUpdater {

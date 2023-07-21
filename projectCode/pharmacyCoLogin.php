@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (isset($_SESSION['company'])) {
+	header("Location: ");
+}
+?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,46 +13,62 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Company Login</title>
 	<style>
-		body {
-			font-family: Arial, sans-serif;
-			background-color: #f0f2f5;
-			margin: 0;
-			padding: 0;
-		}
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
 
-		form {
-			background-color: #fff;
-			padding: 20px;
-			max-width: 400px;
-			margin: 20px auto;
-			border-radius: 4px;
-			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-		}
+        .login-form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
 
-		input[type="text"],
-		input[type="password"] {
-			width: 100%;
-			padding: 10px;
-			border: 1px solid #ccc;
-			border-radius: 4px;
-			margin-bottom: 10px;
-			box-sizing: border-box;
-		}
+        .login-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-		input[type="submit"] {
-			background-color: #4267B2;
-			color: #fff;
-			border: none;
-			padding: 10px 20px;
-			border-radius: 4px;
-			cursor: pointer;
-			margin-top: 30px;
-		}
+        .login-form input[type="text"],
+        .login-form input[type="password"] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
 
-		input[type="submit"]:hover {
-			background-color: #3b5998;
-		}
-	</style>
+        .login-form input[type="submit"] {
+            background-color: #1877F2; /* Facebook blue color */
+            color: #ffffff;
+            width: 100%;
+            padding: 12px 20px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .login-form input[type="submit"]:hover {
+            background-color: #0f6ad0; /* Slightly darker on hover */
+        }
+
+        .error-message {
+            color: #ff0000;
+            margin-top: 5px;
+        }
+    </style>
 </head>
 <body>
 	<?php
@@ -85,18 +109,29 @@
 			mysqli_close($connection);
 		}
 	}
-	if(isset($_POST['submit'])){
-		$username = $_POST['username'];
-		$password = $_POST['password'];
+if(isset($_POST['submit'])){
+	$username = $_POST['username'];
+	$password = $_POST['password'];
 
-		$company = new CompanyLogin($username,$password);
-		$company->checkCompany();
-	}
+	$company = new CompanyLogin($username,$password);
+	$company->checkCompany();
+}
 	?>
-	<form action="pharmacyCoLogin.php" method="post">
-		<input type="text" name="username" placeholder="Username: ">
-		<input type="password" name="password" placeholder="Password: " >
-		<input type="submit" name="submit" value="Login">			
-	</form>
+		<div class="login-form">
+        <h2>Company Login</h2>
+        <form action="pharmacyCoLogin.php" method="post">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="submit" name="submit" value="Login">
+        </form>
+        <?php
+        // Display error messages (if any)
+        if (!empty($errors)) {
+            foreach ($errors as $error) {
+                echo '<div class="error-message">' . $error . '</div>';
+            }
+        }
+        ?>
+    </div>
 </body>
 </html>
