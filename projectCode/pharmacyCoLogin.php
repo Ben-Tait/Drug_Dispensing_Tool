@@ -1,17 +1,50 @@
-<?php
-session_start();
-if (isset($_SESSION['company'])) {
-	header("Location: ");
-}
-?>
-
-
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Company Login</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f0f2f5;
+			margin: 0;
+			padding: 0;
+		}
+
+		form {
+			background-color: #fff;
+			padding: 20px;
+			max-width: 400px;
+			margin: 20px auto;
+			border-radius: 4px;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		}
+
+		input[type="text"],
+		input[type="password"] {
+			width: 100%;
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			margin-bottom: 10px;
+			box-sizing: border-box;
+		}
+
+		input[type="submit"] {
+			background-color: #4267B2;
+			color: #fff;
+			border: none;
+			padding: 10px 20px;
+			border-radius: 4px;
+			cursor: pointer;
+			margin-top: 30px;
+		}
+
+		input[type="submit"]:hover {
+			background-color: #3b5998;
+		}
+	</style>
 </head>
 <body>
 	<?php
@@ -52,18 +85,18 @@ if (isset($_SESSION['company'])) {
 			mysqli_close($connection);
 		}
 	}
-if(isset($_POST['submit'])){
-	$username = $_POST['username'];
-	$password = $_POST['password'];
+	if(isset($_POST['submit'])){
+		$username = $_POST['username'];
+		$password = $_POST['password'];
 
-	$company = new CompanyLogin($username,$password);
-	$company->checkCompany();
-}
+		$company = new CompanyLogin($username,$password);
+		$company->checkCompany();
+	}
 	?>
-		<form action="pharmacyCoLogin.php" method="post">
-			<input type="text" name="username" placeholder="Username: ">
-			<input type="password" name="password" placeholder="Password: " >
-			<input type="submit" name="submit" value="Login">			
-		</form>
+	<form action="pharmacyCoLogin.php" method="post">
+		<input type="text" name="username" placeholder="Username: ">
+		<input type="password" name="password" placeholder="Password: " >
+		<input type="submit" name="submit" value="Login">			
+	</form>
 </body>
 </html>
