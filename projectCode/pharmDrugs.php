@@ -106,15 +106,34 @@ if (!isset($_SESSION["pharmacy"])) {
         }
 
         public function getDrug() {
-            $sql = "SELECT drugName, tradeName, drugFormula, price, dateOfman, expiryDate FROM drug";
+            $sql = "SELECT drugName, tradeName, drugFormula, price, dateOfman, expiryDate 
+        FROM drug AS d 
+        WHERE d.drug_ID IN (SELECT drugId FROM pharmdrug AS p WHERE p.pharmID = ?)";
+
             $stmt = mysqli_stmt_init($this->conn);
-            mysqli_stmt_prepare($stmt, $sql);
-            mysqli_stmt_execute($stmt);
-            $result = mysqli_stmt_get_result($stmt);
+            $pharmid = $this->getPharmID();
+            if (mysqli_stmt_prepare($stmt, $sql)){
+                mysqli_stmt_bind_param($stmt, "i", $pharmid);
+                mysqli_stmt_execute($stmt);
+                $result = mysqli_stmt_get_result($stmt);
             $drugs = mysqli_fetch_all($result, MYSQLI_ASSOC);
             mysqli_stmt_close($stmt);
             return $drugs;
+            }           
         }
+        public function getPharmID(){
+        $pharmacyusername = $_SESSION['pharmacy'];
+        $stmt = mysqli_stmt_init($this->conn);
+        $sql = "SELECT pharmID FROM pharmacy WHERE username = ?";
+        $preparestmt = mysqli_stmt_prepare($stmt,$sql);
+        if ($preparestmt) {
+            mysqli_stmt_bind_param($stmt, "i", $pharmacyusername);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            $pharmid = mysqli_fetch_array($result, MYSQLI_ASSOC);
+            return $pharmid['pharmID'];
+        }
+    }
     }
 
     $drug = new Drug();
@@ -124,6 +143,7 @@ if (!isset($_SESSION["pharmacy"])) {
         <a href="pharmacy.php"><i class="material-icons icon">home</i></a>
         <ul>
             <li><a href="pharmcontracts.php">Contracts</a></li>
+            <li><a href="activeContracts.php">Contracts Inventory</a></li>
             <li><a href="pharmDrugs.php">Drugs</a></li>
             <li><a href="pharmInventory.php">Drugs Inventory</a></li>
             <li><a href="pharmPrescriptions.php">Prescriptions</a></li>
